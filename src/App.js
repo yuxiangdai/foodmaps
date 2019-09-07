@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import API_KEY from './config.js';
 
 const MapApiKey = require('./config.js');
 
@@ -203,5 +204,5 @@ const MapWrapper = props => (
 
 
 export default GoogleApiWrapper({
-  apiKey: MapApiKey
-})(MapContainer);
+  apiKey: API_KEY
+})(MapWrapper);
