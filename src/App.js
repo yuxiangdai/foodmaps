@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
 import Slider from 'react-rangeslider'
+import Coupon from './shared/coupon/coupon.jsx';
 
 import API_KEY from './config.js';
 import 'react-rangeslider/lib/index.css';
@@ -12,7 +13,29 @@ import logo from './logo.svg';
 class Contents extends Component {
   state = {
     position: null,
-    maxPrice: 0
+    maxPrice: 0,
+    showingInfoWindow: true,
+    activeMarker: {},
+    selectedPlace: {}
+  };
+
+  onMarkerClick = (props, marker, e) => {
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+    console.log("You clicked me!");
+  }
+    
+
+  onMapClicked = (props) => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      })
+    }
   };
 
   componentDidMount() {
@@ -26,10 +49,6 @@ class Contents extends Component {
   onSubmit(e) {
     console.log("You clicked me!")
     e.preventDefault();
-  }
-
-  renderModal() {
-    console.log("You clicked me!")
   }
 
   renderAutoComplete() {
@@ -83,47 +102,39 @@ class Contents extends Component {
                 type="text"
               />
           <form onSubmit={this.onSubmit}>
-
-          <h3>Filters</h3>
-          <div>
-           <input type="checkbox" id="10Dollar" name="subscribe" value="newsletter"/>
-          <label htmlFor="10Dollar">Under $10</label>
-          </div>
+            <h3>Filters</h3>
+            <div>
+            <input type="checkbox" id="10Dollar" name="subscribe" value="newsletter"/>
+              <label htmlFor="10Dollar">Under $10</label>
+            </div>
 
 
           <div >
-          <Slider
-            min={0}
-            max={100}
-            value={maxPrice}
-            orientation="horizontal"
-            labels={{
-              0: '$0',
-              50: '$50',
-              100: '$100'
-            }}
-            format={value =>  '$' + value}
-            // handleLabel={maxPrice}
-            onChange={this.handleOnChange}
-          />
-        <div className='value'>{'$' + maxPrice}</div>
-
-
+            <Slider
+              min={0}
+              max={100}
+              value={maxPrice}
+              orientation="horizontal"
+              labels={{
+                0: '$0',
+                50: '$50',
+                100: '$100'
+              }}
+              format={value =>  '$' + value}
+              // handleLabel={maxPrice}
+              onChange={this.handleOnChange}
+            />
+            <div className='value'>{'$' + maxPrice}</div>
           </div>
-  
-         
             <input type="submit" value="Apply" />
           </form>
 
           <div>
-            <div>Lat: {position && position.lat()}</div>
-            <div>Lng: {position && position.lng()}</div>
+            <span>Lat: {position && position.lat()}</span>
+            <span>Lng: {position && position.lng()}</span>
           </div>
         </div>
 
-          
-
-    
         <div >
           <Map
             {...this.props}
@@ -135,8 +146,16 @@ class Contents extends Component {
               width: '100%'
             }}>
             <Marker position={position}
-             onClick={() => this.renderModal()}
+             onClick={this.onMarkerClick}
+             name={'PennApps'}
             />
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}>
+                <div>
+                  <Coupon/>
+                </div>
+            </InfoWindow>
           </Map>
         </div>
       </div>
