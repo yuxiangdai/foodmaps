@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
+const MapApiKey = require('./config.js');
+
 const mapStyles = {
   width: '100%',
   height: '100%',
@@ -201,5 +203,5 @@ const MapWrapper = props => (
 
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDj6-zI3yhhjLVMjCHJs646vcuRhI9SAMg'
-})(MapWrapper);
+  apiKey: MapApiKey
+})(MapContainer);
