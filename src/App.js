@@ -1,105 +1,18 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import Slider from 'react-rangeslider'
+
 import API_KEY from './config.js';
+import 'react-rangeslider/lib/index.css';
 
-const MapApiKey = require('./config.js');
+import './App.css';
 
-const mapStyles = {
-  width: '100%',
-  height: '100%',
-};
-
-export class MapContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      position: null,
-      stores: [{lat: 47.49855629475769, lng: -122.14184416996333},
-              {latitude: 47.359423, longitude: -122.021071},
-              {latitude: 47.2052192687988, longitude: -121.988426208496},
-              {latitude: 47.6307081, longitude: -122.1434325},
-              {latitude: 47.3084488, longitude: -122.2140121},
-              {latitude: 47.5524695, longitude: -122.0425407}]
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps.map) this.renderAutoComplete();
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-  }
-
-  renderAutoComplete() {
-    const { google, map } = this.props;
-
-    if (!google || !map) return;
-
-    const autocomplete = new google.maps.places.Autocomplete(this.autocomplete);
-    autocomplete.bindTo('bounds', map);
-
-    autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
-
-      if (!place.geometry) return;
-
-      if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
-      else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);
-      }
-
-      this.setState({ position: place.geometry.location });
-    });
-  }
-
-  displayMarkers = () => {
-    return this.state.stores.map((store, index) => {
-      return <Marker key={index} id={index} position={{
-       lat: store.latitude,
-       lng: store.longitude
-     }}
-     onClick={() => console.log("You clicked me!")} />
-    })
-  }
-
-  render() {
-    const { position } = this.state;
-
-    return (
-      <>
-        <form onSubmit={this.onSubmit}>
-            <input
-              placeholder="Enter a location"
-              ref={ref => (this.autocomplete = ref)}
-              type="text"
-            />
-
-            <input type="submit" value="Go" />
-        </form>
-        <Map
-            {...this.props}
-            center={position}
-            centerAroundCurrentLocation={false}
-            containerStyle={{
-              height: '100vh',
-              position: 'relative',
-              width: '100%'
-            }}>
-            <Marker position={position} />
-        </Map>
-        </>
-    );
-  }
-}
+import logo from './logo.svg';
 
 class Contents extends Component {
   state = {
-    position: null
+    position: null,
+    maxPrice: 0
   };
 
   componentDidMount() {
@@ -111,14 +24,12 @@ class Contents extends Component {
   }
 
   onSubmit(e) {
-
-    const { google, map } = this.props;
-
-    console.log("test")
-
-
+    console.log("You clicked me!")
     e.preventDefault();
+  }
 
+  renderModal() {
+    console.log("You clicked me!")
   }
 
   renderAutoComplete() {
@@ -154,20 +65,54 @@ class Contents extends Component {
     
   }
 
+  handleOnChange = (value) => {
+    this.setState({
+      maxPrice: value
+    })
+  }
+
   render() {
-    const { position } = this.state;
+    const { position, maxPrice } = this.state;
 
     return (
       <div >
         <div >
+          <input
+                placeholder="Enter a location"
+                ref={ref => (this.autocomplete = ref)}
+                type="text"
+              />
           <form onSubmit={this.onSubmit}>
-            <input
-              placeholder="Enter a location"
-              ref={ref => (this.autocomplete = ref)}
-              type="text"
-            />
 
-            <input type="submit" value="Go" />
+          <h3>Filters</h3>
+          <div>
+           <input type="checkbox" id="10Dollar" name="subscribe" value="newsletter"/>
+          <label htmlFor="10Dollar">Under $10</label>
+          </div>
+
+
+          <div >
+          <Slider
+            min={0}
+            max={100}
+            value={maxPrice}
+            orientation="horizontal"
+            labels={{
+              0: '$0',
+              50: '$50',
+              100: '$100'
+            }}
+            format={value =>  '$' + value}
+            // handleLabel={maxPrice}
+            onChange={this.handleOnChange}
+          />
+        <div className='value'>{'$' + maxPrice}</div>
+
+
+          </div>
+  
+         
+            <input type="submit" value="Apply" />
           </form>
 
           <div>
@@ -176,6 +121,9 @@ class Contents extends Component {
           </div>
         </div>
 
+          
+
+    
         <div >
           <Map
             {...this.props}
@@ -186,7 +134,9 @@ class Contents extends Component {
               position: 'relative',
               width: '100%'
             }}>
-            <Marker position={position} />
+            <Marker position={position}
+             onClick={() => this.renderModal()}
+            />
           </Map>
         </div>
       </div>
