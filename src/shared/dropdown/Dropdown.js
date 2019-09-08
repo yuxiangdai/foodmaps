@@ -13,7 +13,7 @@ import Slider from '../Slider';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '96%',
+    // width: '103%',
     marginTop: '10px',
     marginBottom: '10px',
   },

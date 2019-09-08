@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
 
 import Coupon from './shared/coupon/coupon.jsx';
-import Expansion from './shared/dropdown/Dropdown';
+import Dropdown from './shared/dropdown/Dropdown';
 
 import API_KEY from './config.js';
 
@@ -102,7 +102,7 @@ class Contents extends Component {
                 ref={ref => (this.autocomplete = ref)}
                 type="text"
               />
-              <Expansion/>
+              <Dropdown />
           <div>
             <span>Lat: {position && position.lat()}</span>
             <div>Long: {position && position.lng()}</div>
