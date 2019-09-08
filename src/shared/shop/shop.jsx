@@ -6,22 +6,21 @@ import './shop.scss';
 export default class Shop extends Component {
     render () {
 			const brief = this.props.type + ' | ' + 'rating: ' + this.props.rating;
-			const coupons = this.props.coupons;
 			return (
 				<div>
 					<h1>{this.props.res_name}</h1>
 					<span>{brief}</span>
-					{coupons.map(function(d, idx){
+					{this.props.coupons.map(function(d, idx){
 						return (
-							<li key={idx}>
+							<span key={idx}>
 								<Coupon 
 									id = {d.id}
-									name={d.name} 
+									item={d.item} 
 									price={d.price} 
 									old_price={d.old_price} 
 									link={d.link}
 								/>
-							</li>
+							</span>
 						);
 					})}
 				</div>
@@ -35,21 +34,30 @@ Shop.propTypes = {
 	rating: PropTypes.number,
 	coupons: PropTypes.arrayOf({
 		id: PropTypes.number,
-		name: PropTypes.string,
+		item: PropTypes.string,
 		price: PropTypes.number,
 		old_price: PropTypes.number,
 		link: PropTypes.string
 	})
-}
+}	
 
 Shop.defaultProps = {
 	res_name: 'KungFuTea',
 	type: 'Boba',
 	rating: 4.3,
-	coupons: [{
-		id: 123,
-		itme: 'Poke Bowl',
-		price: 100,
-		old_price: 200,
-		link: 'https://www.google.com/maps'}]
+	coupons: [
+		{
+			id: 1,
+			item: 'Cheese steak',
+			price: 100,
+			old_price: 200,
+			link: 'http://www.fiveguys.com/'
+		},
+		{
+			id: 2,
+			item: 'Takoyaki',
+			price: 200,
+			old_price: 300,
+			link: 'https://bonchon.com/'
+		}]
 };

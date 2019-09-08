@@ -4,16 +4,15 @@ import './coupon.scss';
 
 export default class Coupon extends Component {
 	render(){
-		const discount = ((this.props.old_price - this.props.price) / this.props.old_price) * 100;
+		const discount = Math.round(((this.props.old_price - this.props.price) / this.props.old_price) * 100);
+		const iteminfo = this.props.item + ' : ' + ' $' + this.props.price;
+		const qrlink = `https://api.qrserver.com/v1/create-qr-code/?data=${this.props.link}&amp;size=100x100`
 		if (this.props.id) {
 			return (
 				<div className='coupon_info'>
-					<h1>{this.props.name}</h1>
-					<div>
-						<h2>Spicy Salmon bowl: ${this.props.price}</h2>
-						<h3>Discount: {discount} % </h3>
-					</div>
-					<a href={this.props.link}>GET SOME GET SOME!</a>
+					<h2>{iteminfo}</h2>
+					<h3>Discount: {discount} % </h3>
+					<a href={qrlink}>Go to your QR code here</a>
 				</div>
 			);
 		}
@@ -22,16 +21,16 @@ export default class Coupon extends Component {
 
 Coupon.propTypes = {
     id: PropTypes.number,
-    name: PropTypes.string,
+    item: PropTypes.string,
     price: PropTypes.number,
     old_price: PropTypes.number,
     link: PropTypes.string
 }
 
-Coupon.defaultProps = {
-  id: 123,
-	itme: 'Poke Bowl',
-	price: 100,
-	old_price: 200,
-	link: 'https://www.google.com/maps'
-};
+// Coupon.defaultProps = {
+// 	id: 123,
+// 	item: 'Poke Bowl',
+// 	price: 100,
+// 	old_price: 200,
+// 	link: 'http://www.fiveguys.com/'
+// };
