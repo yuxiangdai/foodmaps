@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   formControl: {
-    margin: '20px 0px',
+    marginBottom: '10px',
   },
 }));
 
@@ -34,7 +34,6 @@ export default function CheckboxesGroup() {
   return (
     <div className={classes.root}>
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Filters</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={<Checkbox checked={gilad} onChange={handleChange('gilad')} value="gilad" />}
