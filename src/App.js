@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
-import Slider from 'react-rangeslider'
+
 import Coupon from './shared/coupon/coupon.jsx';
 import Shop from './shared/shop/shop.jsx';
+import Dropdown from './shared/dropdown/Dropdown';
 
 import API_KEY from './config.js';
+
 import 'react-rangeslider/lib/index.css';
-
-import './App.css';
-
-import logo from './logo.svg';
+import './App.scss';
 
 class Contents extends Component {
   state = {
@@ -30,7 +29,6 @@ class Contents extends Component {
     console.log("You clicked me!");
   }
     
-
   onMapClicked = (props) => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -72,6 +70,7 @@ class Contents extends Component {
     // autocomplete.bindTo('bounds', map);
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
+      
       if (!place.geometry) return;
       this.setState({ placename: place.name });
       if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
@@ -95,55 +94,29 @@ class Contents extends Component {
     const { position, maxPrice } = this.state;
     return (
       <div >
-        <div >
+        <div className="search__form" >
           <input
+                className="search__places"
                 placeholder="Enter a location"
                 ref={ref => (this.autocomplete = ref)}
                 type="text"
               />
-          <form onSubmit={this.onSubmit}>
-            <h3>Filters</h3>
-            <div>
-            <input type="checkbox" id="10Dollar" name="subscribe" value="newsletter"/>
-              <label htmlFor="10Dollar">Under $10</label>
-            </div>
-
-
-          <div >
-            <Slider
-              min={0}
-              max={100}
-              value={maxPrice}
-              orientation="horizontal"
-              labels={{
-                0: '$0',
-                50: '$50',
-                100: '$100'
-              }}
-              format={value =>  '$' + value}
-              // handleLabel={maxPrice}
-              onChange={this.handleOnChange}
-            />
-            <div className='value'>{'$' + maxPrice}</div>
-          </div>
-            <input type="submit" value="Apply" />
-          </form>
-
+              <Dropdown />
           <div>
             <span>Lat: {position && position.lat()}</span>
-            <span>Lng: {position && position.lng()}</span>
+            <div>Long: {position && position.lng()}</div>
           </div>
         </div>
-
         <div >
           <Map
             {...this.props}
             center={position}
             centerAroundCurrentLocation={false}
             containerStyle={{
-              height: '100vh',
+              height: '400px',
               position: 'relative',
-              width: '100%'
+              margin: '2.5%',
+              width: '95%'
             }}>
             <Marker position={position}
              onClick={this.onMarkerClick}
@@ -167,9 +140,6 @@ const MapWrapper = props => (
     <Contents {...props} />
   </Map>
 );
-
-// export default MapWrapper;
-
 
 export default GoogleApiWrapper({
   apiKey: API_KEY
