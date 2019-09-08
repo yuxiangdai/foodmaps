@@ -41,14 +41,10 @@ class Contents extends Component {
   reformatName = (name) => name.replace(/\s/g, '').toLowerCase();
 
   sendMsg = (number) => {
-    const message = "You are now subscribed to text notifications for deals";
+    const message = "You are now subscribed to daily text notifications for deals";
     const data = {
       msg: message,
       phone: number
-    }
-
-    if (number != "+16478868634"){
-      return
     }
 
     fetch(`https://awesome-delight-252323.appspot.com/twilio`, {
