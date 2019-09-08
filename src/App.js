@@ -17,10 +17,38 @@ class Contents extends Component {
     showingInfoWindow: true,
     activeMarker: {},
     selectedPlace: {},
-    placename: null
+    placename: null,
+    shopData: {}
   };
 
+  reformatName = (name) => name.replace(/\s/g, '').toLowerCase();
+
   onMarkerClick = (props, marker, e) => {
+
+    console.log(this.state.placename)
+
+
+    if (this.state.placename != null) {
+      const queryString = this.state.placename.replace(/\s/g, '').toLowerCase();
+
+      fetch(`https://awesome-delight-252323.appspot.com/discounts/${queryString}`)
+      .then(function(response) {
+        console.log({response})
+        return response.json();
+      })
+      .then((myJson) => {
+        console.log(JSON.stringify(myJson));
+  
+        this.setState({
+          shopData: myJson
+        })
+      });
+    } else {
+      this.setState({
+        shopData: {}
+      })
+    }
+    
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -132,7 +160,10 @@ class Contents extends Component {
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}>
                 <div>
-                  <Shop res_name={this.state.placename}/>
+                  <Shop res_name={this.state.placename}
+                    data={this.state.shopData}
+                  
+                  />
                 </div>
             </InfoWindow>
           </Map>
