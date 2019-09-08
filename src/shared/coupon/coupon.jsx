@@ -10,7 +10,7 @@ export default class Coupon extends Component {
 				<div className='coupon_info'>
 					<h1>{this.props.name}</h1>
 					<div>
-						<h2>Spicy Salmon bowl: ${this.props.price}</h2>
+						<h2>{this.props.itme}: ${this.props.price}</h2>
 						<h3>Discount: {discount} % </h3>
 					</div>
 					<a href={this.props.link}>GET SOME GET SOME!</a>
@@ -29,7 +29,7 @@ Coupon.propTypes = {
 }
 
 Coupon.defaultProps = {
-  id: 123,
+	id: 123,
 	itme: 'Poke Bowl',
 	price: 100,
 	old_price: 200,
