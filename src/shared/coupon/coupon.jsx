@@ -26,20 +26,6 @@ export default class Coupon extends Component {
 	}
 
 	render(){
-		// const [open, setOpen] = React.useState(false);
-
-		const handleOpen = () => {
-		  this.setState({
-			  open: true,
-		  })
-		};
-	  
-		const handleClose = () => {
-			this.setState({
-				open: false,
-			})
-		};
-
 		const discount = Math.round(((this.props.old_price - this.props.price) / this.props.old_price) * 100);
 		const iteminfo = this.props.item + ' : ' + ' $' + this.props.price;
 	
@@ -55,13 +41,6 @@ export default class Coupon extends Component {
 					<h2>{iteminfo}</h2>
 					<h3>{discountPercent}</h3>
 					<a href={qrlink}>Go to your QR code here</a>
-					<button type="button" onClick={handleOpen}>
-						Open Modal
-					</button>
-					<div class="w3-container">
-					<p>Some text..</p>
-					<p>Some text..</p>
-					</div>
 				</div>
 			);
 		}
