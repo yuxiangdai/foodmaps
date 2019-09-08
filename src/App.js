@@ -84,6 +84,12 @@ class Contents extends Component {
     
   }
 
+  onInfoWindowClose = () =>
+    this.setState({
+      activeMarker: null,
+      showingInfoWindow: false
+    });
+
   handleOnChange = (value) => {
     this.setState({
       maxPrice: value
@@ -122,6 +128,7 @@ class Contents extends Component {
              onClick={this.onMarkerClick}
             />
             <InfoWindow
+              onClose={this.onInfoWindowClose}
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}>
                 <div>
