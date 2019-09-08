@@ -91,15 +91,26 @@ class Contents extends Component {
 
     const callback = (results, status) => {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-          var place = results[i];
-          this.setState({ 
-            places: [...this.state.places,
-              place
-            ],
-          });
-        }
-        console.log(this.state.places)
+        // for (var i = 0; i < results.length; i++) {
+        //   var place = results[i];
+        
+        // }
+        this.setState({ 
+          places: results
+        });      
+
+
+        if (results[0]) {
+
+          const place = results[0]
+    
+          // this.setState({ placename: place.name });
+      
+          console.log({place})
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);
+    
+        }      
       }
       else{
           alert("status bad");
@@ -108,21 +119,24 @@ class Contents extends Component {
 
     placesService.findPlaceFromQuery(request, callback);
 
-    if (this.state.places[0]) {
+    // placesService.addListener('place_changed', () => {
+    //   const place = placesService.getPlace();
+      
+    //   if (!place.geometry) return;
+    //   this.setState({ placename: place.name });
+    //   if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
+    //   else {
+    //     map.setCenter(place.geometry.location);
+    //     map.setZoom(17);
+    //   }
 
-      console.log(this.state.places[0])
-      const place = this.state.places[0]
+    //   this.setState({ position: place.geometry.location });
+    // });
+    
+    console.log(this.state.places)
 
-      // this.setState({ placename: place.name });
-  
-      if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
-      else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);
-      }
-  
-      // this.setState({ position: place.geometry.location });
-    }
+
+
 
     e.preventDefault();
   }
@@ -146,6 +160,8 @@ class Contents extends Component {
     // autocomplete.bindTo('bounds', map);
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
+
+      console.log({place})
       
       if (!place.geometry) return;
       this.setState({ placename: place.name });
@@ -174,6 +190,7 @@ class Contents extends Component {
 
   displayMarkers = () => {
 
+    console.log(this.props)
     const { google, map } = this.props;
 
     if (!google || !map) return;
@@ -186,7 +203,7 @@ class Contents extends Component {
       const place = this.state.places[0]
 
       // this.setState({ placename: place.name });
-  
+      console.log(place)
       if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
       else {
         map.setCenter(place.geometry.location);
