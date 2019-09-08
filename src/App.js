@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
 import Slider from 'react-rangeslider'
 import Coupon from './shared/coupon/coupon.jsx';
+import Shop from './shared/shop/shop.jsx';
 
 import API_KEY from './config.js';
 import 'react-rangeslider/lib/index.css';
@@ -16,7 +17,8 @@ class Contents extends Component {
     maxPrice: 0,
     showingInfoWindow: true,
     activeMarker: {},
-    selectedPlace: {}
+    selectedPlace: {},
+    placename: null
   };
 
   onMarkerClick = (props, marker, e) => {
@@ -70,9 +72,8 @@ class Contents extends Component {
     // autocomplete.bindTo('bounds', map);
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
-
       if (!place.geometry) return;
-
+      this.setState({ placename: place.name });
       if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
       else {
         map.setCenter(place.geometry.location);
@@ -92,7 +93,6 @@ class Contents extends Component {
 
   render() {
     const { position, maxPrice } = this.state;
-
     return (
       <div >
         <div >
@@ -147,13 +147,12 @@ class Contents extends Component {
             }}>
             <Marker position={position}
              onClick={this.onMarkerClick}
-             name={'PennApps'}
             />
             <InfoWindow
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}>
                 <div>
-                  <Coupon/>
+                  <Shop res_name={this.state.placename}/>
                 </div>
             </InfoWindow>
           </Map>

@@ -30,7 +30,7 @@ Coupon.propTypes = {
 
 Coupon.defaultProps = {
   id: 123,
-	name: 'Poke Bowl',
+	itme: 'Poke Bowl',
 	price: 100,
 	old_price: 200,
 	link: 'https://www.google.com/maps'
