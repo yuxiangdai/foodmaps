@@ -27,7 +27,6 @@ class Contents extends Component {
     console.log("You clicked me!");
   }
     
-
   onMapClicked = (props) => {
     if (this.state.showingInfoWindow) {
       this.setState({
