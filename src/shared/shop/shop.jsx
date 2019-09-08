@@ -6,6 +6,7 @@ import './shop.scss';
 export default class Shop extends Component {
     render () {
 		const { store, type } = this.props.data
+		console.log(store);
 		const typeWord = type != undefined ? type + ' | ' : ''
 		const brief = typeWord + 'Rating: ' + this.props.rating;
 		const coupons = this.props.data.coupons;
@@ -59,20 +60,5 @@ Shop.defaultProps = {
 	res_name: 'KungFuTea',
 	type: 'Boba',
 	rating: 4.3,
-	coupons: [
-		// {
-		// 	id: 1,
-		// 	item: 'Cheese steak',
-		// 	price: 100,
-		// 	old_price: 200,
-		// 	link: 'http://www.fiveguys.com/'
-		// },
-		// {
-		// 	id: 2,
-		// 	item: 'Takoyaki',
-		// 	price: 200,
-		// 	old_price: 300,
-		// 	link: 'https://bonchon.com/'
-		// }
-	]
+	coupons: []
 };

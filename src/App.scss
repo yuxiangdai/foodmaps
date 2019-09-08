@@ -32,9 +32,19 @@
   }
 }
 
+.logo {
+  margin: 1.5%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+}
+
 .search__form {
   margin: 2.5%;
-  width: 90%;
+  margin-bottom: 0;
+  margin-top: 1.5%;
+  width: 95%;
 }
 
 .search__places {
@@ -42,6 +52,8 @@
   height: 50px;
   font-size: 20px;
   padding: 5px;
+  border-radius: 25px;
+  border: 2px solid #73AD21;
 }
 
 
@@ -54,8 +66,7 @@
 .phone__button {
   background: none;
   box-shadow: none;
-  margin: 5px;
-  margin-left: 10px;
+  margin: 0 30px;
   background-color: white; /* Green */
   border: none;
   color: #4CAF50;
@@ -63,7 +74,7 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 18px;
   border-radius: 2px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -131,6 +142,7 @@
   margin-top: 10px;
 }
 
-// .modal {
-//   height: 100px;
-// }
+.footer {
+  display: block;
+  margin-left:10px;
+}

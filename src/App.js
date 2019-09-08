@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
 import moment from 'moment';
 
-import Coupon from './shared/coupon/coupon.jsx';
 import Shop from './shared/shop/shop.jsx';
 import Dropdown from './shared/dropdown/Dropdown';
 
@@ -80,8 +79,8 @@ class Contents extends Component {
         }
 
         const dailyMsg = `Today is ${today}.
-      \nYour daily deals today are:
-${deal}`;
+                          \nYour daily deals today are:
+                          ${deal}`;
 
         const data = {
           msg: dailyMsg,
@@ -219,23 +218,27 @@ ${deal}`;
   render() {
     const { position, maxPrice } = this.state;
     return (
-      <div >
+      <div>
+        <div>
+        <img src={require('./MP.jpeg')} className="logo"/>
+        </div>
+        
         <div className="search__form" >
           <input
-                className="search__places"
-                placeholder="Enter a location"
-                ref={ref => (this.autocomplete = ref)}
-                type="text"
-              />
-              <Dropdown />
+            className="search__places"
+            placeholder="  Enter a location"
+            ref={ref => (this.autocomplete = ref)}
+            type="text"
+          />
+          <Dropdown />
         </div>
         <button className="phone__button" onClick={this.handleOpenModal.bind(this)}>Subscribe to Text Notifications</button>
         <ReactModal 
-           isOpen={this.state.showModal}
-           contentLabel="Minimal Modal Example"
+          isOpen={this.state.showModal}
+          contentLabel="Minimal Modal Example"
         >
           <div>
-          Phone Number
+            Phone Number
           </div>
           <div className="modal__description">
             Input your phone number to receive daily deals around you
@@ -249,10 +252,11 @@ ${deal}`;
         <input className="modal__button_submit" type="submit" value="Submit"
         onClick={() => this.sendMsg(this.state.phone)} 
         />
-                  <button className="modal__button_close" onClick={this.handleCloseModal.bind(this)}>Cancel</button>
+
+        <button className="modal__button_close" onClick={this.handleCloseModal.bind(this)}>Cancel</button>
 
         </ReactModal>
-        <div >
+        <div className="map">
           <Map
             {...this.props}
             center={position}
@@ -273,12 +277,18 @@ ${deal}`;
                 <div>
                   <Shop res_name={this.state.placename}
                     data={this.state.shopData}
-                  
                   />
                 </div>
             </InfoWindow>
           </Map>
         </div>
+
+        <footer className="footer">
+          <div>Created by: Team Hulk</div>
+          <div>Contact information: <a href="mailto:hulk@example.com">
+          hulk@example.com</a>.</div>
+          <small>&copy; Copyright 2019 Nowhere Inc.</small>
+        </footer>
       </div>
     );
   }
